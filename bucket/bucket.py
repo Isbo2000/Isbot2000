@@ -59,6 +59,7 @@ def reply():
     try:
         if os.name == "posix":
             subprocess.getoutput("chmod +x ./bucket/mrkfeed.awk")
+            subprocess.getoutput("chmod +x ./bucket/mrkwords.sh")
             subprocess.getoutput("./bucket/mrkfeed.awk < ./bucket/tempbucket.txt >> ./bucket/model.mrkdb")
             if os.path.exists("./bucket/tempbucket.txt"):
                 os.remove("./bucket/tempbucket.txt")
