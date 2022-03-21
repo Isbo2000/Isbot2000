@@ -1,7 +1,5 @@
 Assets/Config/login.json
-Assets/Data/cmtdone.json
-Assets/Data/pstdone.json
-Assets/Data/optout.json
+Assets/Data/
 
 bucket/model.mrkdb
 bucket/tempbucket.txt
