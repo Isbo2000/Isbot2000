@@ -1,4 +1,4 @@
-import gptj
+import modules.gptj as gptj
 import random
 
 def reply(text,author,hug,sig):
@@ -29,7 +29,6 @@ def reply(text,author,hug,sig):
                 if scores[n] > score:
                     score = scores[n]
                     tag = tags[n]
-            #print(f"{tag}: {score}%")
             if not(tag == "neutral" or score < 60):
                 classify.append(tag)
                 confidence.append(score)
@@ -84,38 +83,4 @@ def reply(text,author,hug,sig):
             return
     except BaseException as error:
         print("\n----ERROR----\nfailed 'SENTIMENT REPLY'\n"+str(error))
-        return
-
-def bucket(text):
-    try:
-        analyze = gptj.Sentiment()
-        labels = (
-            ["positive","neutral","negative"],
-            ["wholesome","neutral","unwholesome"],
-            ["nice","neutral","mean"],
-            ["harmless","neutral","offensive"],
-            ["normal","neutral","horny"]
-        )
-        results = analyze.multi(text, labels)
-
-        classify = []
-        for result in results:
-            tags = []
-            scores = []
-            for labels in result.keys():
-                tags.append(labels)
-            for probability in result.values():
-                scores.append(round(probability*100, 2))
-            score = scores[0]
-            tag = tags[0]
-            for n in range(len(tags)):
-                if scores[n] > score:
-                    score = scores[n]
-                    tag = tags[n]
-            #print(f"{tag}: {score}%")
-            if (score > 60):
-                classify.append(tag)
-        return classify
-    except BaseException as error:
-        print("\n----ERROR----\nfailed 'SENTIMENT BUCKET'\n"+str(error))
         return

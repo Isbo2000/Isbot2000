@@ -1,7 +1,7 @@
 import re
 import praw
 import json
-import sentiment
+import modules.sentiment as sentiment
 import praw.models
 import bucket.bucket as bucket
 
@@ -17,6 +17,9 @@ def reply(reddit,sig,hug):
         if (author in users): return
         if (id in cmtdone): return
         if not(isinstance(reply, praw.models.Comment)): return
+        with open('./Assets/Config/config.json') as cfg:
+            config = json.load(cfg)
+        if (reply.submission == reddit.submission(id=config["post_id"])): return
         
         if (id not in cmtdone):
             bucket.data(reply.body)
@@ -65,16 +68,7 @@ def reply(reddit,sig,hug):
             reply.collapse()
             reply.mark_read()
             print("\nINBOX REPLY\nreplied to:\nhttps://www.reddit.com" + reply.context)
-        
-        if ("slake" in text) and id not in cmtdone:
-            reply.reply("Slakey is amazing, I love her <3"+sig)
-            cmtdone.append(id)
-            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
-                json.dump(cmtdone, cmt)
-            reply.collapse()
-            reply.mark_read()
-            print("\nINBOX REPLY\nreplied to:\nhttps://www.reddit.com" + reply.context)
-        
+
         if ("cum" in text) and id not in cmtdone:
             reply.reply("WEE WOO WEE WOO\n\nALERT! COMEDY GOD HAS ENTERED THE BUILDING! GET TO COVER!\n\n"+
                 "steps on stage\n\nBystander: 'Oh god! Don`t do it! I have a family!'\n\nComedy God: 'Heh...'\n\n"+
@@ -111,7 +105,7 @@ def reply(reddit,sig,hug):
         
         if (id not in cmtdone):
             message = bucket.reply()
-            if (message):
+            if message:
                 reply.reply(message+sig)
                 cmtdone.append(id)
                 with open('./Assets/Data/cmtdone.json', 'w') as cmt:

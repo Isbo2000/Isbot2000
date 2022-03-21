@@ -53,17 +53,7 @@ def reply(subreddits,sig,hug):
             with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
-        
-        if ("slake" in post) and id not in pstdone:
-            bucket.data(text)
-            submission.reply("Slakey is amazing, I love her <3\n\n"
-                "And so are you :D"+sig)
-            submission.hide()
-            pstdone.append(id)
-            with open('./Assets/Data/pstdone.json', 'w') as pst:
-                json.dump(pstdone, pst)
-            print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
-        
+
         if ("sandwich" in post) and id not in pstdone:
             bucket.data(text)
             submission.reply("SANDWICHES ARE VERY YUMMY :D"+sig)

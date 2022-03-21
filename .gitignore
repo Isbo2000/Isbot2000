@@ -1,3 +1,11 @@
+Assets/Config/login.json
+Assets/Data/cmtdone.json
+Assets/Data/pstdone.json
+Assets/Data/optout.json
+
+bucket/model.mrkdb
+bucket/tempbucket.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,39 +1,72 @@
-import os
 import praw
-import json
-import post
-import inbox
-import random
+import getpass
+import post,inbox
+import os,sys,random,json
 from timeloop import Timeloop
 from datetime import timedelta
 
-reddit = praw.Reddit(
-    client_id = "", 
-    client_secret = "", 
-    username = "", 
-    password = "", 
-    user_agent = "")
+with open('./Assets/Config/config.json') as cfg:
+    config = json.load(cfg)
+files = ["optout.json","pstdone.json","cmtdone.json"]
+for file in files:
+    if not(os.path.exists('./Assets/Data/'+file)):
+        with open('./Assets/Data/'+file, 'w') as f:
+            json.dump('["Isbot2000"]', f)
+
+def redlog(login):
+    return praw.Reddit(
+        client_id = login["id"], 
+        client_secret = login["secret"], 
+        username = login["username"], 
+        password = login["password"], 
+        user_agent = config["user_agent"])
+def asklogin():
+    print("PLease enter your bot login info (dw, it is only stored locally)\n")
+    i = getpass.getpass('Id: ')
+    s = getpass.getpass('Secret: ')
+    u = input('Username: ')
+    p = getpass.getpass('Password: ')
+    login = {"id":i,"secret":s,"username":u,"password":p}
+    with open('./Assets/Config/login.json', 'w') as lgn:
+        json.dump(login, lgn)
+    try:
+        print("\nChecking details...\n")
+        redlog(login).user.me()
+    except:
+        print("ERROR: Invalid login")
+        os.remove('./Assets/Config/login.json')
+        sys.exit()
+    print("Logging in...\n")
+    return redlog(login)
+def checklogin():
+    if os.path.exists('./Assets/Config/login.json'):
+        with open('./Assets/Config/login.json') as lgn:
+            login = json.load(lgn)
+        try:
+            print("\nChecking details...\n")
+            redlog(login).user.me()
+        except:
+            return asklogin()
+    else:
+        return asklogin()
+    print("Logging in...\n")
+    return redlog(login)
+reddit = checklogin()
+print("Logged in as: "+str(reddit.user.me())+"\n")
+
 hug = ["(づ｡◕‿‿◕｡)づ"," つ ◕‿◕ つ","(っ.❛ ᴗ ❛.)っ","(つ≧▽≦)つ",
     "(づ￣ ³￣)づ","(> \^_\^ )>","ʕ ⊃･ ◡ ･ ʔ⊃"," つ ◕o◕ つ",
     " つ ◕_◕ つ","(.づ◡﹏◡)づ.","(.づσ▿σ)づ.","（っ・∀・）っ",
     "(っ\^_\^)っ","(.づσ▿σ)づ.","(つ✧ω✧)つ","(づ ◕‿◕ )づ"]
-sig = ("\n\n[**beep boop im a bot**]"
-    "(https://www.reddit.com/user/Isbot2000/comments/t84xrl/isbot2000_wholesomeness_bot_for_rteenagersbutpog/)")
-
-subreddit = reddit.subreddit('teenagersbutpog')
-subreddits = reddit.subreddit('teenagersbutpog+IsboCult+TESTYTOSTY+ThePogNation')
+sig = "\n\n[**beep boop im a bot**]("+config["link"]+")"
+subreddit = reddit.subreddit(config["subreddit"])
+subreddits = reddit.subreddit(config["subreddits"])
 reddit._validate_on_submit = True
 tl = Timeloop()
-with open('./Assets/Data/pstdone.json') as pst:
-    pstdone = json.load(pst)
-with open('./Assets/Data/cmtdone.json') as cmt:
-    cmtdone = json.load(cmt)
-with open('./Assets/Data/optout.json') as optout:
-    users = json.load(optout)
 
 @tl.job(interval=timedelta(minutes=5))
 def OPT_OUT():
-    post = reddit.submission(id='t84xrl')
+    post = reddit.submission(id=config["post_id"])
     try:
         for comment in post.comments:
             with open('./Assets/Data/optout.json') as optout:
@@ -46,17 +79,25 @@ def OPT_OUT():
             
             if ((("opt" in text) and ("out" in text)) and (
                     ("opt" in text) and ("in" in text))) and id not in cmtdone:
-                if (author not in users):
+                comment.mod.remove(spam=False)
+                cmtdone.append(id)
+                with open('./Assets/Data/cmtdone.json', 'w') as cmt:
+                    json.dump(cmtdone, cmt)
+                comment.collapse()
+
+            elif (("opt" in text) and ("out" in text)) and id not in cmtdone:
+                if (author in users):
                     comment.mod.remove(spam=False)
                     cmtdone.append(id)
                     with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                         json.dump(cmtdone, cmt)
                     comment.collapse()
-
-            elif (("opt" in text) and ("out" in text)) and id not in cmtdone:
-                if (author not in users):
+                elif (author not in users):
                     users.append(author)
-                    comment.reply("opted you out"+sig).distinguish(how='yes', sticky=False)
+                    com = comment.reply("opted you out"+sig)
+                    com.mod.distinguish(how='yes', sticky=False)
+                    com.mod.lock()
+                    comment.mod.lock()
                     with open('./Assets/Data/optout.json', 'w') as optout:
                         json.dump(users, optout)
                     cmtdone.append(id)
@@ -72,9 +113,12 @@ def OPT_OUT():
                     with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                         json.dump(cmtdone, cmt)
                     comment.collapse()
-                if (author in users):
+                elif (author in users):
                     users.remove(author)
-                    comment.reply("opted you back in").distinguish(how='yes', sticky=False)
+                    com = comment.reply("opted you back in")
+                    com.mod.distinguish(how='yes', sticky=False)
+                    com.mod.lock()
+                    comment.mod.lock()
                     cmtdone.append(id)
                     with open('./Assets/Data/optout.json', 'w') as optout:
                         json.dump(users, optout)
@@ -113,7 +157,6 @@ def POST_REPLY():
 def WHOLESOME():
     choice = random.randrange(15)
     title = "Hourly Wholesomeness"
-    flair = "5e7f6884-9a44-11eb-8dd2-0ee36a4197b1"
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
         "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
         "wholesome","wholesomegifs","wholesomememes"]
@@ -125,8 +168,8 @@ def WHOLESOME():
                 x for x in os.listdir(path)
                 if os.path.isfile(os.path.join(path, x))])
             image = "./Assets/Images/"+filename
-            submit = subreddit.submit_image(title=title,image_path=image,flair_id=flair)
-            print('\nPosted:\n' + "https://www.reddit.com/"+submit.permalink + "\nimage post")
+            submit = subreddit.submit_image(title=title,image_path=image,flair_id=config["post_flair"])
+            print('\nPosted:\n' + "https://www.reddit.com"+submit.permalink + "\nimage post")
         except BaseException as error:
             print("\n----ERROR----\nfailed 'WHOLESOME'\nimage post\n"+str(error))
             return
@@ -139,8 +182,8 @@ def WHOLESOME():
                 if os.path.isfile(os.path.join(path, x))])
             with open(path+filename) as f:
                 text = f.read()
-            submit = subreddit.submit(title=title,selftext=text,flair_id=flair)
-            print('\nPosted:\n' + "https://www.reddit.com/"+submit.permalink + "\ntext post")
+            submit = subreddit.submit(title=title,selftext=text,flair_id=config["post_flair"])
+            print('\nPosted:\n' + "https://www.reddit.com"+submit.permalink + "\ntext post")
         except BaseException as error:
             print("\n----ERROR----\nfailed 'WHOLESOME'\ntext post\n"+str(error))
             return
@@ -148,8 +191,8 @@ def WHOLESOME():
     if (choice > 5):
         try:
             post = random.choice([x for x in reddit.subreddit(random.choice(sub)).top("day",limit=10)])
-            submit = post.crosspost(subreddit=subreddit,title=title,flair_id=flair)
-            print('\nPosted:\n' + "https://www.reddit.com/"+submit.permalink + "\ncrosspost")
+            submit = post.crosspost(subreddit=subreddit,title=title,flair_id=config["post_flair"])
+            print('\nPosted:\n' + "https://www.reddit.com"+submit.permalink + "\ncrosspost")
         except BaseException as error:
             print("\n----ERROR----\nfailed 'WHOLESOME'\ncrosspost\n"+str(error))
             return
