@@ -39,7 +39,7 @@ def data(text):
                 else:
                     text_ok = False
         except:
-            text_ok = False
+            text_ok = True
 
         if (text_ok):
             for word in blacklist:
