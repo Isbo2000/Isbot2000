@@ -6,7 +6,7 @@ Somewhat configurable
 
 # Specifications ig
 
-Works on linux and mostly on windows (not tested on mac or anything)
+Works on linux and somewhat on windows (not tested on mac or anything)
 
 On windows the bucket chat bot feature does not work, but hopefully I can get that working in the newr future
 
