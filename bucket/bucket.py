@@ -48,23 +48,20 @@ def data(text):
                     "c01d8ad78c5d07c0597cf612131a1f385a2e4cdb",
                     "54ca0e7c4dfd764d9a7710d3a2cda04ff5cff974"
                 ]
-                k = 0
                 for key in keys:
                     try: 
-                        ml = MonkeyLearn(key[k])
+                        ml = MonkeyLearn(key)
                         data = [text]
                         model_id = 'cl_pi3C7JiL'
                         result = ml.classifiers.classify(model_id,data,retry_if_throttled=True)
-                        continue
+                        tag = result.body[-1]['classifications'][0]['tag_name']
+                        confidence = result.body[-1]['classifications'][0]['confidence']
+                        if ((tag == "Negative") and (confidence > 0.80)):
+                            text_ok = True
+                        else:
+                            text_ok = False
                     except:
-                        k =+ 1
-                k = 0
-                tag = result.body[-1]['classifications'][0]['tag_name']
-                confidence = result.body[-1]['classifications'][0]['confidence']
-                if ((tag == "Negative") and (round(confidence*100, 2) > 0.80)):
-                    text_ok = True
-                else:
-                    text_ok = False
+                        keys.remove(key)
             except:
                 text_ok = False
 

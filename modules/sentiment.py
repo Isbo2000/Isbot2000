@@ -92,29 +92,26 @@ def reply(text,author,hug,sig):
                 "c01d8ad78c5d07c0597cf612131a1f385a2e4cdb",
                 "54ca0e7c4dfd764d9a7710d3a2cda04ff5cff974"
             ]
-            k = 0
             for key in keys:
                 try: 
-                    ml = MonkeyLearn(key[k])
+                    ml = MonkeyLearn(key)
                     data = [text]
                     model_id = 'cl_pi3C7JiL'
                     result = ml.classifiers.classify(model_id,data,retry_if_throttled=True)
-                    continue
+                    tag = result.body[-1]['classifications'][0]['tag_name']
+                    confidence = result.body[-1]['classifications'][0]['confidence']
+                    if ((tag == "Negative") and (confidence > 0.80)):
+                        message = ("It sounds like you might need a hug :/\n\n"
+                            "ily "+author+" <3\n\n"
+                            "here is a hug if you want it "+random.choice(hug)+"\n\n"
+                            "^(UH OH, the sentiment ai has broke so this is the backup B'\( \(sorry ;-;\))"
+                            "\n\n^(This message was sent because the `backup ai` was "+str(round(confidence*100, 2))+"%"+" sure your message was negative)"
+                            "\n\n^(If you have any problems please contact Isbo2000!)\n\n&#x200B;"+sig)
+                        return message
+                    else:
+                        return
                 except:
-                    k =+ 1
-            k = 0
-            tag = result.body[-1]['classifications'][0]['tag_name']
-            confidence = result.body[-1]['classifications'][0]['confidence']
-            if ((tag == "Negative") and (round(confidence*100, 2) > 0.80)):
-                message = ("It sounds like you might need a hug :/\n\n"
-                    "ily "+author+" <3\n\n"
-                    "here is a hug if you want it "+random.choice(hug)+"\n\n"
-                    "^(UH OH, the sentiment ai has broke so this is the backup B'\( \(sorry ;-;\))"
-                    "\n\n^(This message was sent because the `backup ai` was "+round(confidence*100, 2)+"%"+" sure your message was negative)"
-                    "\n\n^(If you have any problems please contact Isbo2000!)\n\n&#x200B;"+sig)
-                return message
-            else:
-                return
+                    keys.remove(key)
         except BaseException as error:
             print("\n----ERROR----\nfailed 'SENTIMENT REPLY BACKUP'\n"+str(error))
             return
