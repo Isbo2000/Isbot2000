@@ -1,6 +1,6 @@
 from monkeylearn import MonkeyLearn
 import subprocess,re,os
-import gptj
+import Modules.gptj as gptj
 
 #store text for bucket
 def data(text):

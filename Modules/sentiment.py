@@ -1,7 +1,7 @@
 #need
 from monkeylearn import MonkeyLearn
 import random
-import gptj
+import Modules.gptj as gptj
 
 def reply(text,author,hug,sig):
     try:
