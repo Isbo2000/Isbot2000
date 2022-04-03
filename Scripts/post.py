@@ -18,22 +18,24 @@ def reply(subreddits,sig,hug):
         #dimibot reply
         if (author == "DimittrikovBot") and id not in pstdone:
             message = Modules.bucket.reply()
-            submission.reply(message+sig)
-            submission.hide()
-            pstdone.append(id)
-            with open('./Assets/Data/pstdone.json', 'w') as pst:
-                json.dump(pstdone, pst)
-            print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
+            if message:
+                submission.reply(message+sig)
+                submission.hide()
+                pstdone.append(id)
+                with open('./Assets/Data/pstdone.json', 'w') as pst:
+                    json.dump(pstdone, pst)
+                print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
         #automod reply
         if (author == "AutoModerator") and id not in pstdone:
             message = Modules.bucket.reply()
-            submission.reply(message+sig)
-            submission.hide()
-            pstdone.append(id)
-            with open('./Assets/Data/pstdone.json', 'w') as pst:
-                json.dump(pstdone, pst)
-            print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
+            if message:
+                submission.reply(message+sig)
+                submission.hide()
+                pstdone.append(id)
+                with open('./Assets/Data/pstdone.json', 'w') as pst:
+                    json.dump(pstdone, pst)
+                print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
         if (author in users): return
 
