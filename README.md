@@ -20,6 +20,8 @@ cd Isbot2000
 ```
 Change what is in the config file to your needs
 
+install the dependencies (praw, timeloop, monkeylearn)
+
 Run the bot:
 ```sh
 python main.py
