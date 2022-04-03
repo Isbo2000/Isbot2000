@@ -8,6 +8,8 @@ import praw
 with open('./Assets/Config/config.json') as cfg:
     config = json.load(cfg)
 files = ["optout.json","pstdone.json","cmtdone.json"]
+if not(os.path.exists('./Assets/Data')):
+    os.makedirs('./Assets/Data')
 for file in files:
     if not(os.path.exists('./Assets/Data/'+file)):
         with open('./Assets/Data/'+file, 'w') as f:
