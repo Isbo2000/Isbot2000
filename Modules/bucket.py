@@ -92,6 +92,7 @@ def reply():
             if os.path.exists("./Assets/Data/tempbucket.txt"):
                 os.remove("./Assets/Data/tempbucket.txt")
             message = subprocess.getoutput("./Modules/mrkwords.sh ./Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            print(message)
             return message
         else:
             return
