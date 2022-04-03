@@ -1,4 +1,4 @@
-from Scripts import inbox,opt,post,wholesome
+import Scripts.inbox as inbox
 from datetime import timedelta
 from timeloop import Timeloop
 import os,sys,json,getpass
