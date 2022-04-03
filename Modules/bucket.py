@@ -90,14 +90,12 @@ def reply():
             subprocess.getoutput("chmod +x ./Modules/mrkwords.sh")
             if os.path.exists("./Assets/Data/tempbucket.txt"):
                 subprocess.getoutput("./Modules/mrkfeed.awk < ./Assets/Data/tempbucket.txt >> ./Assets/Data/model.mrkdb")
-                message = subprocess.getoutput("./Modules/mrkwords.sh ./Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
                 os.remove("./Assets/Data/tempbucket.txt")
-                print(message)
-                return message
-            else:
-                return
-        else:
-            return
+                return subprocess.getoutput("./Modules/mrkwords.sh ./Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            elif os.path.exists("./Assets/Data/model.mrkdb"):
+                return subprocess.getoutput("./Modules/mrkwords.sh ./Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            else: return
+        else: return
     except BaseException as error:
         print("\n----ERROR----\nfailed 'BUCKET REPLY'\n"+str(error))
         return
