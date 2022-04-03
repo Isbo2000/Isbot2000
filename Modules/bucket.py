@@ -58,9 +58,9 @@ def data(text):
                         tag = result.body[-1]['classifications'][0]['tag_name']
                         confidence = result.body[-1]['classifications'][0]['confidence']
                         if ((tag == "Negative") and (confidence > 0.80)):
-                            text_ok = True
-                        else:
                             text_ok = False
+                        else:
+                            text_ok = True
                     except:
                         keys.remove(key)
             except:
