@@ -1,7 +1,7 @@
 #need
 import json
 
-def out(reddit,sig,config):
+def out(reddit,sig,config,Modules):
     post = reddit.submission(id=config["post_id"])
     for comment in post.comments:
         with open('../Assets/Data/optout.json') as optout:

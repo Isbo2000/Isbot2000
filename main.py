@@ -1,7 +1,8 @@
-import Scripts
+import inbox,opt,post,wholesome
 from datetime import timedelta
 from timeloop import Timeloop
 import os,sys,json,getpass
+import Modules
 import praw
 
 #check data and config files
@@ -71,7 +72,7 @@ tl = Timeloop()
 @tl.job(interval=timedelta(minutes=5))
 def OPT_OUT():
     try:
-        Scripts.opt.out(reddit,sig,config)
+        opt.out(reddit,sig,config,Modules)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'OPT OUT'\n"+str(error))
         return
@@ -80,7 +81,7 @@ def OPT_OUT():
 @tl.job(interval=timedelta(seconds=30))
 def INBOX_REPLY():
     try:
-        Scripts.inbox.reply(reddit,sig,hug,config)
+        inbox.reply(reddit,sig,hug,config,Modules)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'INBOX REPLY'\n"+str(error))
         return
@@ -89,7 +90,7 @@ def INBOX_REPLY():
 @tl.job(interval=timedelta(seconds=30))
 def POST_REPLY():
     try:
-        Scripts.post.reply(subreddits,sig,hug)
+        post.reply(subreddits,sig,hug,Modules)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'POST REPLY'\n"+str(error))
         return
@@ -98,7 +99,7 @@ def POST_REPLY():
 @tl.job(interval=timedelta(hours=1))
 def WHOLESOME_POST():
     try:
-        Scripts.wholesome.post(subreddit,reddit,config,sig)
+        wholesome.post(subreddit,reddit,config,sig,Modules)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'WHOLESOME'\n"+str(error))
         return
