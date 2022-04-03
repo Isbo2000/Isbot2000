@@ -1,15 +1,15 @@
-import os
-import re
-import subprocess
-import modules.gptj as gptj
 from monkeylearn import MonkeyLearn
+import subprocess,re,os
+from SubMod import gptj
 
+#store text for bucket
 def data(text):
     try:
         blacklist = ["cum","fart","sex","serbia","ploopy","greece",
             "politics","political","capitalist","capitalism","communist",
             "communism","socialist","socialism","democrat","democracy",
             "facist","facism","republic","republican"]
+        #main sentiment check
         try:
             analyze = gptj.Sentiment()
             labels = (
@@ -40,6 +40,7 @@ def data(text):
                 else:
                     text_ok = False
         except:
+            #backup sentiment check
             try:
                 keys = [
                     "807f0c685907e6bf77d2c362895f721e1eed5651",
@@ -64,7 +65,8 @@ def data(text):
                         keys.remove(key)
             except:
                 text_ok = False
-
+        
+        #word blacklist and store data
         if (text_ok):
             for word in blacklist:
                 if (word in text):
@@ -73,21 +75,23 @@ def data(text):
                 text = re.sub('(?i)'+re.escape('u/'), lambda m: 'u~', text)
 
             text = text.encode('ascii', 'ignore')
-            with open('./bucket/tempbucket.txt', 'a')as f:
+            with open('../Assets/Data/tempbucket.txt', 'a')as f:
                 f.write(text.decode() + '\n')
     except BaseException as error:
         print("\n----ERROR----\nfailed 'BUCKET DATA'\n"+str(error))
         return
 
+#bucket reply
 def reply():
     try:
+        #only works on linux at this point (sorry)
         if os.name == "posix":
-            subprocess.getoutput("chmod +x ./bucket/mrkfeed.awk")
-            subprocess.getoutput("chmod +x ./bucket/mrkwords.sh")
-            subprocess.getoutput("./bucket/mrkfeed.awk < ./bucket/tempbucket.txt >> ./bucket/model.mrkdb")
-            if os.path.exists("./bucket/tempbucket.txt"):
-                os.remove("./bucket/tempbucket.txt")
-            message = subprocess.getoutput("./bucket/mrkwords.sh ./bucket/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            subprocess.getoutput("chmod +x ../Modules/SubMod/mrkfeed.awk")
+            subprocess.getoutput("chmod +x ../Modules/SubMod/mrkwords.sh")
+            subprocess.getoutput("../Modules/SubMod/mrkfeed.awk < ../Assets/Data/tempbucket.txt >> ../Assets/Data/model.mrkdb")
+            if os.path.exists("../Assets/Data/tempbucket.txt"):
+                os.remove("../Assets/Data/tempbucket.txt")
+            message = subprocess.getoutput("../Modules/SubMod/mrkwords.sh ../Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
             return message
         else:
             return

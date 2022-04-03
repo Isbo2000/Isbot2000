@@ -1,13 +1,13 @@
 {
-    "user_agent": "Isbot2000 v3.0.1",
+    "version": "Version: 4.0.0",
     
-    "link": "https://www.reddit.com/user/Isbot2000/comments/t84xrl/isbot2000_wholesomeness_bot_for_rteenagersbutpog/",
+    "link": "https://www.reddit.com/user/Isbot2000/comments/tvgjb6/isbot2000_useless_bot_made_by_isbo/",
 
     "subreddit": "teenagersbutpog",
 
-    "subreddits": "teenagersbutpog+IsboCult+TESTYTOSTY+ThePogNation",
+    "subreddits": "teenagersbutpog+IsboCult+ThePogNation",
 
     "post_flair": "5e7f6884-9a44-11eb-8dd2-0ee36a4197b1",
 
-    "post_id": "t84xrl"
+    "post_id": "tvgjb6"
 }
