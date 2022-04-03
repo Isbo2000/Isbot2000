@@ -1,6 +1,6 @@
 from monkeylearn import MonkeyLearn
 import subprocess,re,os
-import SubMod
+import gptj
 
 #store text for bucket
 def data(text):
@@ -11,7 +11,7 @@ def data(text):
             "facist","facism","republic","republican"]
         #main sentiment check
         try:
-            analyze = SubMod.gptj.Sentiment()
+            analyze = gptj.Sentiment()
             labels = (
                 ["positive","neutral","negative"],
                 ["wholesome","neutral","unwholesome"],
@@ -86,12 +86,12 @@ def reply():
     try:
         #only works on linux at this point (sorry)
         if os.name == "posix":
-            subprocess.getoutput("chmod +x ../Modules/SubMod/mrkfeed.awk")
-            subprocess.getoutput("chmod +x ../Modules/SubMod/mrkwords.sh")
-            subprocess.getoutput("../Modules/SubMod/mrkfeed.awk < ../Assets/Data/tempbucket.txt >> ../Assets/Data/model.mrkdb")
+            subprocess.getoutput("chmod +x ../Modules/mrkfeed.awk")
+            subprocess.getoutput("chmod +x ../Modules/mrkwords.sh")
+            subprocess.getoutput("../Modules/mrkfeed.awk < ../Assets/Data/tempbucket.txt >> ../Assets/Data/model.mrkdb")
             if os.path.exists("../Assets/Data/tempbucket.txt"):
                 os.remove("../Assets/Data/tempbucket.txt")
-            message = subprocess.getoutput("../Modules/SubMod/mrkwords.sh ../Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            message = subprocess.getoutput("../Modules/mrkwords.sh ../Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
             return message
         else:
             return
