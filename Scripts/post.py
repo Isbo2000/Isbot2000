@@ -1,11 +1,5 @@
 from Modules import bucket
 import random,json,re
-import os
-for module in os.listdir(os.path.dirname(__file__)):
-    if module == '__init__.py' or module[-3:] != '.py':
-        continue
-    __import__(module[:-3], locals(), globals())
-del module
 
 def reply(subreddits,sig,hug):
     for submission in subreddits.new(limit=10):

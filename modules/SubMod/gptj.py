@@ -1,12 +1,6 @@
 from __future__ import annotations
 from typing import Iterable
 import requests
-import os
-for module in os.listdir(os.path.dirname(__file__)):
-    if module == '__init__.py' or module[-3:] != '.py':
-        continue
-    __import__(module[:-3], locals(), globals())
-del module
 
 class Sentiment:
     """Advanced custom label sentiment analyzer using a GPT-J API"""

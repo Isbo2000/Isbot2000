@@ -1,12 +1,6 @@
 import praw,praw.models
 import re,json
 import Modules
-import os
-for module in os.listdir(os.path.dirname(__file__)):
-    if module == '__init__.py' or module[-3:] != '.py':
-        continue
-    __import__(module[:-3], locals(), globals())
-del module
 
 def reply(reddit,sig,hug,config):
     for reply in reddit.inbox.unread(limit=10):
