@@ -1,7 +1,8 @@
 import praw,praw.models
+import Modules
 import re,json
 
-def reply(reddit,sig,hug,config,Modules):
+def reply(reddit,sig,hug,config):
     for reply in reddit.inbox.unread(limit=10):
         author = str(reply.author)
         text = reply.body.lower()

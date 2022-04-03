@@ -1,6 +1,6 @@
 from monkeylearn import MonkeyLearn
 import subprocess,re,os
-from SubMod import gptj
+import SubMod
 
 #store text for bucket
 def data(text):
@@ -11,7 +11,7 @@ def data(text):
             "facist","facism","republic","republican"]
         #main sentiment check
         try:
-            analyze = gptj.Sentiment()
+            analyze = SubMod.gptj.Sentiment()
             labels = (
                 ["positive","neutral","negative"],
                 ["wholesome","neutral","unwholesome"],

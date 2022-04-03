@@ -1,11 +1,11 @@
 #need
 from monkeylearn import MonkeyLearn
-from SubMod import gptj
 import random
+import SubMod
 
 def reply(text,author,hug,sig):
     try:
-        analyze = gptj.Sentiment()
+        analyze = SubMod.gptj.Sentiment()
         labels = (
             ["positive","neutral","negative"],
             ["happy","neutral","sad"],

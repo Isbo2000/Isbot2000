@@ -1,6 +1,7 @@
 import random,json,re
+import Modules
 
-def reply(subreddits,sig,hug,Modules):
+def reply(subreddits,sig,hug):
     for submission in subreddits.new(limit=10):
         text = submission.title+" "+submission.selftext
         author = str(submission.author)

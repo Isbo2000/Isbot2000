@@ -1,7 +1,7 @@
 #need
 import os,random
 
-def post(subreddit,reddit,config,sig,Modules):
+def post(subreddit,reddit,config,sig):
     choice = random.randrange(15)
     title = "Hourly Wholesomeness"
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
