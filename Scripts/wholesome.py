@@ -10,11 +10,11 @@ def post(subreddit,reddit,config,sig):
 
     if (choice < 4):
         try:
-            path = r"../Assets/Images/"
+            path = r"./Assets/Images/"
             filename = random.choice([
                 x for x in os.listdir(path)
                 if os.path.isfile(os.path.join(path, x))])
-            image = "../Assets/Images/"+filename
+            image = "./Assets/Images/"+filename
             submit = subreddit.submit_image(title=title,image_path=image,flair_id=config["post_flair"])
             print('\nPosted:\n' + "https://www.reddit.com"+submit.permalink + "\nimage post")
         except BaseException as error:
@@ -23,7 +23,7 @@ def post(subreddit,reddit,config,sig):
         
     if (choice > 3) and (choice < 6):
         try:
-            path = r"../Assets/Texts/"
+            path = r"./Assets/Texts/"
             filename = random.choice([
                 x for x in os.listdir(path)
                 if os.path.isfile(os.path.join(path, x))])

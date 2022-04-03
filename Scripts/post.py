@@ -9,9 +9,9 @@ def reply(subreddits,sig,hug):
         body = submission.selftext.lower()
         post = title+" "+body
         id = submission.id
-        with open('../Assets/Data/pstdone.json') as pst:
+        with open('./Assets/Data/pstdone.json') as pst:
             pstdone = json.load(pst)
-        with open('../Assets/Data/optout.json') as optout:
+        with open('./Assets/Data/optout.json') as optout:
             users = json.load(optout)
         if (id in pstdone): return
 
@@ -21,7 +21,7 @@ def reply(subreddits,sig,hug):
             submission.reply(message+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -31,7 +31,7 @@ def reply(subreddits,sig,hug):
             submission.reply(message+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -43,7 +43,7 @@ def reply(subreddits,sig,hug):
             submission.reply("what What WHAT, what do you want from me???"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -53,7 +53,7 @@ def reply(subreddits,sig,hug):
             submission.reply("CULT CULT CULT"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         if ("sandwich" in post) and id not in pstdone:
@@ -61,7 +61,7 @@ def reply(subreddits,sig,hug):
             submission.reply("SANDWICHES ARE VERY YUMMY :D"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -73,7 +73,7 @@ def reply(subreddits,sig,hug):
             submission.reply("ily "+author+" <3"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -84,7 +84,7 @@ def reply(subreddits,sig,hug):
             submission.reply("Goodnight :D"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         if ((("good" in post) and ("morning" in post)) or (
@@ -93,7 +93,7 @@ def reply(subreddits,sig,hug):
             submission.reply("Good morning :D"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -105,7 +105,7 @@ def reply(subreddits,sig,hug):
             submission.reply("ew, politics :P"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)
         
@@ -119,6 +119,6 @@ def reply(subreddits,sig,hug):
                 +random.choice(hug)+"Ily "+author+" <3"+sig)
             submission.hide()
             pstdone.append(id)
-            with open('../Assets/Data/pstdone.json', 'w') as pst:
+            with open('./Assets/Data/pstdone.json', 'w') as pst:
                 json.dump(pstdone, pst)
             print('\nPOST REPLY\nreplied to:\n' + "https://www.reddit.com"+submission.permalink)

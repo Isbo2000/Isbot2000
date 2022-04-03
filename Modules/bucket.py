@@ -75,7 +75,7 @@ def data(text):
                 text = re.sub('(?i)'+re.escape('u/'), lambda m: 'u~', text)
 
             text = text.encode('ascii', 'ignore')
-            with open('../Assets/Data/tempbucket.txt', 'a')as f:
+            with open('./Assets/Data/tempbucket.txt', 'a')as f:
                 f.write(text.decode() + '\n')
     except BaseException as error:
         print("\n----ERROR----\nfailed 'BUCKET DATA'\n"+str(error))
@@ -86,12 +86,12 @@ def reply():
     try:
         #only works on linux at this point (sorry)
         if os.name == "posix":
-            subprocess.getoutput("chmod +x ../Modules/mrkfeed.awk")
-            subprocess.getoutput("chmod +x ../Modules/mrkwords.sh")
-            subprocess.getoutput("../Modules/mrkfeed.awk < ../Assets/Data/tempbucket.txt >> ../Assets/Data/model.mrkdb")
-            if os.path.exists("../Assets/Data/tempbucket.txt"):
-                os.remove("../Assets/Data/tempbucket.txt")
-            message = subprocess.getoutput("../Modules/mrkwords.sh ../Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
+            subprocess.getoutput("chmod +x ./Modules/mrkfeed.awk")
+            subprocess.getoutput("chmod +x ./Modules/mrkwords.sh")
+            subprocess.getoutput("./Modules/mrkfeed.awk < ./Assets/Data/tempbucket.txt >> ./Assets/Data/model.mrkdb")
+            if os.path.exists("./Assets/Data/tempbucket.txt"):
+                os.remove("./Assets/Data/tempbucket.txt")
+            message = subprocess.getoutput("./Modules/mrkwords.sh ./Assets/Data/model.mrkdb 555|head -c1000|tr '\n' ' ' && echo")
             return message
         else:
             return

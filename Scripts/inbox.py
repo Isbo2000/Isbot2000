@@ -7,9 +7,9 @@ def reply(reddit,sig,hug,config):
         author = str(reply.author)
         text = reply.body.lower()
         id = reply.id
-        with open('../Assets/Data/cmtdone.json') as cmt:
+        with open('./Assets/Data/cmtdone.json') as cmt:
             cmtdone = json.load(cmt)
-        with open('../Assets/Data/optout.json') as optout:
+        with open('./Assets/Data/optout.json') as optout:
             users = json.load(optout)
         if (author in users): return
         if (id in cmtdone): return
@@ -24,7 +24,7 @@ def reply(reddit,sig,hug,config):
         if (("good" in text) and ("bot" in text)) and id not in cmtdone:
             reply.reply("yay, thanks :D"+sig)
             cmtdone.append(id)
-            with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             reply.collapse()
             reply.mark_read()
@@ -37,7 +37,7 @@ def reply(reddit,sig,hug,config):
                 "love" in text) or (("don" in text) and ("love" in text))) and id not in cmtdone:
             reply.reply("aw :'( ok..."+sig)
             cmtdone.append(id)
-            with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             reply.collapse()
             reply.mark_read()
@@ -50,7 +50,7 @@ def reply(reddit,sig,hug,config):
                 re.escape("not")), text) is not None))) and id not in cmtdone:
             reply.reply("oh, alright.."+sig)
             cmtdone.append(id)
-            with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             reply.collapse()
             reply.mark_read()
@@ -61,7 +61,7 @@ def reply(reddit,sig,hug,config):
                 "thx" in text)) and id not in cmtdone:
             reply.reply("You're welcome :D"+sig)
             cmtdone.append(id)
-            with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             reply.collapse()
             reply.mark_read()
@@ -85,7 +85,7 @@ def reply(reddit,sig,hug,config):
                 "people who aren`t killed die from laughter\n\nliterally the funniest joke in the world\n\n"+
                 "then the comedy god himself posts his creation to reddit and gets karma\n\n&#x200B;"+sig)
             cmtdone.append(id)
-            with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+            with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             reply.collapse()
             reply.mark_read()
@@ -97,7 +97,7 @@ def reply(reddit,sig,hug,config):
             if (message):
                 reply.reply(message)
                 cmtdone.append(id)
-                with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+                with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                     json.dump(cmtdone, cmt)
                 reply.collapse()
                 reply.mark_read()
@@ -109,7 +109,7 @@ def reply(reddit,sig,hug,config):
             if message:
                 reply.reply(message+sig)
                 cmtdone.append(id)
-                with open('../Assets/Data/cmtdone.json', 'w') as cmt:
+                with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                     json.dump(cmtdone, cmt)
                 reply.collapse()
                 reply.mark_read()
