@@ -61,7 +61,7 @@ hug = ["(づ｡◕‿‿◕｡)づ"," つ ◕‿◕ つ","(っ.❛ ᴗ ❛.)っ"
     "(づ￣ ³￣)づ","(> \^_\^ )>","ʕ ⊃･ ◡ ･ ʔ⊃"," つ ◕o◕ つ",
     " つ ◕_◕ つ","(.づ◡﹏◡)づ.","(.づσ▿σ)づ.","（っ・∀・）っ",
     "(っ\^_\^)っ","(.づσ▿σ)づ.","(つ✧ω✧)つ","(づ ◕‿◕ )づ"]
-sig = ("\n\n[**beep boop im a bot**]("+config["link"]+") **|** ["+config["version"]+"]("+config["github"]+")")
+sig = ("\n\n[**beep boop im a bot**]("+config["link"]+") | [**"+config["version"]+"**]("+config["github"]+")")
 subreddit = reddit.subreddit(config["subreddit"])
 subreddits = reddit.subreddit(config["subreddits"])
 reddit._validate_on_submit = True
