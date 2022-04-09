@@ -1,4 +1,3 @@
-#need
 import os,random
 
 def post(subreddit,reddit,config,sig):
@@ -7,7 +6,8 @@ def post(subreddit,reddit,config,sig):
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
         "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
         "wholesome","wholesomegifs","wholesomememes"]
-
+    
+    #chooses and posts random wholesome image
     if (choice < 4):
         try:
             path = r"./Assets/Images/"
@@ -20,7 +20,8 @@ def post(subreddit,reddit,config,sig):
         except BaseException as error:
             print("\n----ERROR----\nfailed 'WHOLESOME'\nimage post\n"+str(error))
             return
-        
+    
+    #chooses and posts random wholesome text
     if (choice > 3) and (choice < 6):
         try:
             path = r"./Assets/Texts/"
@@ -35,6 +36,7 @@ def post(subreddit,reddit,config,sig):
             print("\n----ERROR----\nfailed 'WHOLESOME'\ntext post\n"+str(error))
             return
     
+    #chooses and crossposts random wholesome post
     if (choice > 5):
         try:
             post = random.choice([x for x in reddit.subreddit(random.choice(sub)).top("day",limit=10)])

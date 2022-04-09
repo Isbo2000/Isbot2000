@@ -1,4 +1,3 @@
-#need
 import json
 
 def out(reddit,sig,config):
@@ -12,6 +11,7 @@ def out(reddit,sig,config):
         with open('./Assets/Data/cmtdone.json') as cmt:
             cmtdone = json.load(cmt)
         
+        #looks for and removes comments that say both 'opt in' and 'opt out'
         if ((("opt" in text) and ("out" in text)) and (
                 ("opt" in text) and ("in" in text))) and id not in cmtdone:
             comment.mod.remove(spam=False)
@@ -19,7 +19,9 @@ def out(reddit,sig,config):
             with open('./Assets/Data/cmtdone.json', 'w') as cmt:
                 json.dump(cmtdone, cmt)
             comment.collapse()
-
+        
+        #looks for comments with 'opt out' and opts out author of coment
+        #if user is already opted out remove
         elif (("opt" in text) and ("out" in text)) and id not in cmtdone:
             if (author in users):
                 comment.mod.remove(spam=False)
@@ -40,7 +42,8 @@ def out(reddit,sig,config):
                     json.dump(cmtdone, cmt)
                 comment.collapse()
                 print("\nOPT OUT\nopted "+author+" out")
-
+        
+        #looks for comments with 'opt in' and if user is opted out, opt them back in, otherwise remove
         elif (("opt" in text) and ("in" in text)) and id not in cmtdone:
             if (author not in users):
                 comment.mod.remove(spam=False)
@@ -62,6 +65,7 @@ def out(reddit,sig,config):
                 comment.collapse()
                 print("\nOPT OUT\nopted "+author+" back in")
         
+        #removes all other comments
         elif (id not in cmtdone):
             comment.mod.remove(spam=False)
             cmtdone.append(id)
