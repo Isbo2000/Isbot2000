@@ -5,7 +5,7 @@ def post(subreddit,reddit,config,sig):
     title = "Hourly Wholesomeness"
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
         "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
-        "wholesome","wholesomegifs","wholesomememes"]
+        "wholesome","wholesomememes"]
     
     #chooses and posts random wholesome image
     if (choice < 4):
