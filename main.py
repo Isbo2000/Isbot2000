@@ -36,9 +36,8 @@ def asklogin():
         print("\nChecking details...\n")
         redlog(login).user.me()
     except:
-        print("ERROR: Invalid login")
+        print("ERROR: Invalid login\n")
         os.remove('./Assets/Config/login.json')
-        print("")
         checklogin()
     print("Logging in...\n")
     return redlog(login)
@@ -55,8 +54,11 @@ def checklogin():
         return asklogin()
     print("Logging in...\n")
     return redlog(login)
-reddit = checklogin()
-print("Logged in as: "+str(reddit.user.me())+"\n")
+try:
+    reddit = checklogin()
+    print("Logged in as: "+str(reddit.user.me())+"\n")
+except KeyboardInterrupt:
+    sys.exit()
 
 hug = ["(づ｡◕‿‿◕｡)づ"," つ ◕‿◕ つ","(っ.❛ ᴗ ❛.)っ","(つ≧▽≦)つ",
     "(づ￣ ³￣)づ","(> \^_\^ )>","ʕ ⊃･ ◡ ･ ʔ⊃"," つ ◕o◕ つ",
