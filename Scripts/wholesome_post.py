@@ -1,9 +1,9 @@
 import os,random
 import datetime
 
-def post(subreddit,reddit,config,sig):
+def wholesome_post(subreddit,reddit,config,sig):
     choice = random.randrange(15)
-    title = "'Hourly' Wholesomeness"
+    title = "Wholesomeness post!"
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
         "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
         "wholesome","wholesomememes"]
@@ -15,18 +15,14 @@ def post(subreddit,reddit,config,sig):
         limit=1)][0].created_utc).strftime("%H:%M:%S"),"%H:%M:%S")).seconds
     
     #limits the posting based on how active the subreddit is
-    if pstime > 3600: True
-    elif pstime > 1800:
-        if not random.randint(0,1)==1:
-            False; return
+    if pstime > 1800: True
     elif pstime > 600:
-        if not random.randint(0,4)==4:
+        if not random.randint(1,2)==2:
             False; return
     else:
-        if not random.randint(0,9)==9:
+        if not random.randint(1,5)==5:
             False; return
-
-
+            
     #chooses and posts random wholesome image
     if (choice < 4):
         try:

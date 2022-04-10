@@ -1,9 +1,9 @@
 from monkeylearn import MonkeyLearn
 import subprocess,re,os
-import Modules.gptj as gptj
+import Modules
 
 #store text for bucket
-def data(text):
+def bucket_data(text):
     try:
         blacklist = ["cum","fart","sex","serbia","ploopy","greece",
             "politics","political","capitalist","capitalism","communist",
@@ -11,7 +11,7 @@ def data(text):
             "facist","facism","republic","republican"]
         #main sentiment check
         try:
-            analyze = gptj.Sentiment()
+            analyze = Modules.Sentiment()
             labels = (
                 ["positive","neutral","negative"],
                 ["wholesome","neutral","unwholesome"],
@@ -82,7 +82,7 @@ def data(text):
         return
 
 #bucket reply
-def reply():
+def bucket_reply():
     try:
         #only works on linux at this point (sorry)
         if os.name == "posix":

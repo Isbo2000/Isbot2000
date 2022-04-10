@@ -3,9 +3,10 @@ Assets/Config/login.json
 Assets/Data/cmtdone.json
 Assets/Data/pstdone.json
 Assets/Data/optout.json
-
 Assets/Data/model.mrkdb
 Assets/Data/tempbucket.txt
+
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

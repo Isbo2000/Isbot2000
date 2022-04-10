@@ -2,7 +2,7 @@ import praw,praw.models
 import Modules
 import re,json
 
-def reply(reddit,sig,hug,config):
+def inbox_reply(reddit,sig,hug,config):
     for reply in reddit.inbox.unread(limit=10):
         author = str(reply.author)
         text = reply.body.lower()
@@ -18,7 +18,7 @@ def reply(reddit,sig,hug,config):
         
         #store text for bucket
         if (id not in cmtdone):
-            Modules.bucket.data(reply.body)
+            Modules.bucket_data(reply.body)
         
         #good bot reply
         if (("good" in text) and ("bot" in text)) and id not in cmtdone:
@@ -93,7 +93,7 @@ def reply(reddit,sig,hug,config):
         
         #sentiment ai reply
         if (id not in cmtdone):
-            message = Modules.sentiment.reply(text,author,hug,sig)
+            message = Modules.sentiment_reply(text,author,hug,sig)
             if (message):
                 reply.reply(message)
                 cmtdone.append(id)
@@ -105,7 +105,7 @@ def reply(reddit,sig,hug,config):
         
         #bucket reply
         if (id not in cmtdone):
-            message = Modules.bucket.reply()
+            message = Modules.bucket_reply()
             if message:
                 reply.reply(message+sig)
                 cmtdone.append(id)

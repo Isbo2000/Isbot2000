@@ -38,7 +38,8 @@ def asklogin():
     except:
         print("ERROR: Invalid login")
         os.remove('./Assets/Config/login.json')
-        sys.exit()
+        print("")
+        checklogin()
     print("Logging in...\n")
     return redlog(login)
 def checklogin():
@@ -71,7 +72,7 @@ tl = Timeloop()
 @tl.job(interval=timedelta(minutes=5))
 def OPT_OUT():
     try:
-        Scripts.opt.out(reddit,sig,config)
+        Scripts.opt_out(reddit,sig,config)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'OPT OUT'\n"+str(error))
         return
@@ -80,7 +81,7 @@ def OPT_OUT():
 @tl.job(interval=timedelta(seconds=30))
 def INBOX_REPLY():
     try:
-        Scripts.inbox.reply(reddit,sig,hug,config)
+        Scripts.inbox_reply(reddit,sig,hug,config)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'INBOX REPLY'\n"+str(error))
         return
@@ -89,7 +90,7 @@ def INBOX_REPLY():
 @tl.job(interval=timedelta(seconds=30))
 def POST_REPLY():
     try:
-        Scripts.post.reply(subreddits,sig,hug)
+        Scripts.post_reply(subreddits,sig,hug)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'POST REPLY'\n"+str(error))
         return
@@ -98,9 +99,18 @@ def POST_REPLY():
 @tl.job(interval=timedelta(hours=1))
 def WHOLESOME_POST():
     try:
-        Scripts.wholesome.post(subreddit,reddit,config,sig)
+        Scripts.wholesome_post(subreddit,reddit,config,sig)
     except BaseException as error:
         print("\n----ERROR----\nfailed 'WHOLESOME'\n"+str(error))
+        return
+
+#calls questions post script (posts question thing every 6? hours)
+@tl.job(interval=timedelta(hours=6))
+def QUESTIONS_POST():
+    try:
+        Scripts.question_post(subreddit,config,sig)
+    except BaseException as error:
+        print("\n----ERROR----\nfailed 'QUESTIONS'\n"+str(error))
         return
 
 if __name__ == "__main__":
