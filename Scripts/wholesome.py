@@ -1,12 +1,32 @@
 import os,random
+import datetime
 
 def post(subreddit,reddit,config,sig):
     choice = random.randrange(15)
-    title = "Hourly Wholesomeness"
+    title = "'Hourly' Wholesomeness"
     sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
         "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
         "wholesome","wholesomememes"]
     
+    #gets the most recent post and returns the time in seconds that has passed since it was made
+    pstime = (datetime.datetime.strptime(datetime.datetime.utcnow()
+        .strftime("%H:%M:%S"),"%H:%M:%S")-datetime.datetime.strptime(
+        datetime.datetime.utcfromtimestamp([post for post in subreddit.new(
+        limit=1)][0].created_utc).strftime("%H:%M:%S"),"%H:%M:%S")).seconds
+    
+    #limits the posting based on how active the subreddit is
+    if pstime > 3600: True
+    elif pstime > 1800:
+        if not random.randint(0,1)==1:
+            False; return
+    elif pstime > 600:
+        if not random.randint(0,4)==4:
+            False; return
+    else:
+        if not random.randint(0,9)==9:
+            False; return
+
+
     #chooses and posts random wholesome image
     if (choice < 4):
         try:
