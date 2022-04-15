@@ -2,7 +2,7 @@ import random,json,re
 import Modules
 
 def post_reply(subreddits,sig,hug):
-    for submission in subreddits.new(limit=10):
+    for submission in subreddits.new(limit=20):
         text = submission.title+" "+submission.selftext
         author = str(submission.author)
         title = submission.title.lower()

@@ -1,6 +1,7 @@
 from datetime import timedelta
 from timeloop import Timeloop
 import os,sys,json,getpass
+import random
 import Scripts
 import praw
 
@@ -71,7 +72,7 @@ reddit._validate_on_submit = True
 tl = Timeloop()
 
 #calls opt out script (checks for and opts people out)
-@tl.job(interval=timedelta(minutes=5))
+@tl.job(interval=timedelta(minutes=10))
 def OPT_OUT():
     try:
         Scripts.opt_out(reddit,sig,config)
@@ -80,7 +81,7 @@ def OPT_OUT():
         return
 
 #calls inbox reply script (replies to all messages)
-@tl.job(interval=timedelta(seconds=30))
+@tl.job(interval=timedelta(minutes=1))
 def INBOX_REPLY():
     try:
         Scripts.inbox_reply(reddit,sig,hug,config)
@@ -89,7 +90,7 @@ def INBOX_REPLY():
         return
 
 #calls post reply script (only replies to some posts in specified subreddits)
-@tl.job(interval=timedelta(seconds=30))
+@tl.job(interval=timedelta(minutes=1))
 def POST_REPLY():
     try:
         Scripts.post_reply(subreddits,sig,hug)
@@ -97,22 +98,27 @@ def POST_REPLY():
         print("\n----ERROR----\nfailed 'POST REPLY'\n"+str(error))
         return
 
-#calls wholesome post script (posts wholesome thing every hour)
+#calls either the wholesome post script or question post script
 @tl.job(interval=timedelta(hours=1))
-def WHOLESOME_POST():
+def POSTS():
     try:
-        Scripts.wholesome_post(subreddit,reddit,config,sig)
+        post = random.randint(1,2)
+        if (post == 1):
+            #calls wholesome post script (posts wholesome thing every hour)
+            try:
+                Scripts.wholesome_post(subreddit,reddit,config,sig)
+            except BaseException as error:
+                print("\n----ERROR----\nfailed 'WHOLESOME POST'\n"+str(error))
+                return
+        elif (post == 2):
+            #calls questions post script (posts question thing every 1? hours)
+            try:
+                Scripts.question_post(subreddit,config,sig)
+            except BaseException as error:
+                print("\n----ERROR----\nfailed 'WUESTION POST'\n"+str(error))
+                return
     except BaseException as error:
-        print("\n----ERROR----\nfailed 'WHOLESOME'\n"+str(error))
-        return
-
-#calls questions post script (posts question thing every 6? hours)
-@tl.job(interval=timedelta(hours=6))
-def QUESTIONS_POST():
-    try:
-        Scripts.question_post(subreddit,config,sig)
-    except BaseException as error:
-        print("\n----ERROR----\nfailed 'QUESTIONS'\n"+str(error))
+        print("\n----ERROR----\nfailed 'POSTS'\n"+str(error))
         return
 
 if __name__ == "__main__":

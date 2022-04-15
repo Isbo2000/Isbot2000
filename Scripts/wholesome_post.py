@@ -4,9 +4,7 @@ import datetime
 def wholesome_post(subreddit,reddit,config,sig):
     choice = random.randrange(15)
     title = "Wholesomeness post!"
-    sub = ["Aww","Awww","cute","Eyebleach","illegallysmolanimals",
-        "IllegallySmolCats","IllegallySmolDogs","MadeMeSmile",
-        "wholesome","wholesomememes"]
+    sub = ["Aww","cute","Eyebleach","MadeMeSmile","wholesome","wholesomememes"]
     
     #gets the most recent post and returns the time in seconds that has passed since it was made
     pstime = (datetime.datetime.strptime(datetime.datetime.utcnow()

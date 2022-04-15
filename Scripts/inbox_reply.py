@@ -3,7 +3,7 @@ import Modules
 import re,json
 
 def inbox_reply(reddit,sig,hug,config):
-    for reply in reddit.inbox.unread(limit=10):
+    for reply in reddit.inbox.unread(limit=20):
         author = str(reply.author)
         text = reply.body.lower()
         id = reply.id
