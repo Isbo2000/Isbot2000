@@ -102,20 +102,20 @@ def POST_REPLY():
 @tl.job(interval=timedelta(hours=1))
 def POSTS():
     try:
-        post = random.randint(1,2)
-        if (post == 1):
+        post = random.randint(1,3)
+        if (post == 1 or post == 2):
             #calls wholesome post script (posts wholesome thing every hour)
             try:
                 Scripts.wholesome_post(subreddit,reddit,config,sig)
             except BaseException as error:
                 print("\n----ERROR----\nfailed 'WHOLESOME POST'\n"+str(error))
                 return
-        elif (post == 2):
+        elif (post == 3):
             #calls questions post script (posts question thing every 1? hours)
             try:
                 Scripts.question_post(subreddit,config,sig)
             except BaseException as error:
-                print("\n----ERROR----\nfailed 'WUESTION POST'\n"+str(error))
+                print("\n----ERROR----\nfailed 'QUESTION POST'\n"+str(error))
                 return
     except BaseException as error:
         print("\n----ERROR----\nfailed 'POSTS'\n"+str(error))

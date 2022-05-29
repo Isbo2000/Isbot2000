@@ -24,6 +24,6 @@ def question_post(subreddit,config,sig):
         text = random.choice(f.read().splitlines())
     text = ("###"+text+"\n\ncomment and discuss with others"
         +"\n\n^(this feature is currently being tested out, so any feedback would be awesome, thanks!)"
-        +"\n\n^(thank you to u/what_iffff for the idea and some of the questions!)"+sig)
+        +"\n\n^(thank you to u/what_iffff- for the idea and some of the questions!)"+sig)
     submit = subreddit.submit(title=title,selftext=text,flair_id=config["post_flair"])
     print('\nPosted:\n' + "https://www.reddit.com"+submit.permalink + "\nquestion post")
