@@ -15,6 +15,7 @@ def inbox_reply(reddit,sig,hug,config):
         if (id in cmtdone): return
         if not(isinstance(reply, praw.models.Comment)): return
         if (reply.submission == reddit.submission(id=config["post_id"])): return
+        if (reply.submission == reddit.submission(title="Question post!")): return
         
         #store text for bucket
         if (id not in cmtdone):
